@@ -5,8 +5,8 @@ import { buildMap, checkCells, evolveMap2D } from "./draw2d.js";
 //! nas rano nas rano nas rano uberu potom
 
 const config = {
-  length: 2400,
-  width: 50,
+  length: 6000,
+  width: 100,
   emptySymbol: "  ",
   wallSymbol: "██",
   wallPercentage: 40,
@@ -16,6 +16,7 @@ const fieldMarkingHorizontal = Array.from(
   { length: config.width },
   (_, i) => `<div class='mark'>${i++}</div>`.padStart(2, "0")
 );
+
 const fieldMarkingVertical = Array.from(
   { length: Math.floor(config.length / config.width) },
   (_, i) => `<div class='mark'>${i++}</div>`.padStart(2, "0")

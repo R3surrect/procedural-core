@@ -57,9 +57,11 @@ export const checkCells: CheckAroundCells = (
 
   return cellsAround;
 }
-export const evolveMap2D: EvolveMap2D = (map) => {
+export const evolveMap2D: EvolveMap2D = (binaryMap) => {
 
-
+  for (let i = 3; i < binaryMap.length; i++ ) {
+    
+  }
   
-  return map;
+  return binaryMap;
 };

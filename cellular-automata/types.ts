@@ -1,5 +1,5 @@
 export type AddFrames = (map1D: boolean[], width: number) => boolean[];
-export type EvolveMap2D = (map: boolean[]) => boolean[];
+export type EvolveMap2D = (binaryMap: boolean[], htmlMap: string[]) => boolean[];
 
 export type RawMap = {
   length: number;
