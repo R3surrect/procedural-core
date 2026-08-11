@@ -104,8 +104,8 @@ h1 {
 
 .cell.active {
     color: lightgreen;
-    animation: hightlight 3s infinite ease-in-out alternate;
-    transform: translateY(-3px);
+    animation: hightlight 1s infinite ease-in-out alternate;
+    transform: translateY(-4px);
 }
 
 .cell.wall {
@@ -114,18 +114,22 @@ h1 {
 
 @keyframes hightlight {
     0% {
-        color: hsl(148, 76%, 70%);
+        color: hsl(248, 76%, 80%);
+        /*color: hsl(148, 76%, 70%);*/
+        transform: translateY(-1px);
     }
 
     33% {
-        color: hsl(148, 35%, 40%);
+        color: hsl(148, 35%, 100%);
     }
 
     66% {
-        color: hsl(148, 76%, 70%);
+        color: hsl(248, 76%, 80%);
+        /*color: hsl(148, 76%, 70%);*/
     }
 
     100% {
-        color: hsl(148, 35%, 40%);
+        color: hsl(148, 35%, 100%);
+        transform: translateY(-5px);
     }
 }
