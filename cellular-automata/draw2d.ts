@@ -58,5 +58,8 @@ export const checkCells: CheckAroundCells = (
   return cellsAround;
 }
 export const evolveMap2D: EvolveMap2D = (map) => {
+
+
+  
   return map;
 };

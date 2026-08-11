@@ -28,24 +28,25 @@ h1 {
 }
 
 .maze-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas:
+        "nothing marking-horizontal"
+        "marking-vertical content";
     gap: 1rem;
     width: fit-content;
     height: fit-content;
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .maze,
-.field-marking-horizontal {
+.field-marking-horizontal,
+.field-marking-vertical {
     display: grid;
     font-family:
         "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
     font-size: 12px;
 
-    /*line-height: 1;*/
     letter-spacing: 0;
 
     white-space: pre;
@@ -54,38 +55,77 @@ h1 {
     height: fit-content;
 }
 
-.field-marking-horizontal {
+.field-marking-horizontal,
+.field-marking-vertical {
+    border-radius: 14px;
+    padding: 5px;
+    background-color: hsla(248, 53%, 58%, .1);
     font-weight: bolder;
     margin: 0;
+    text-align: center;
 }
 
-.field-marking-horizontal>.mark:nth-child(even) {
+.field-marking-horizontal {
+    grid-area: marking-horizontal
+}
+
+.field-marking-vertical {
+    grid-area: marking-vertical
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+}
+
+.field-marking-horizontal>.mark:nth-child(even),
+.field-marking-vertical>.mark:nth-child(even) {
     color: azure;
-    background-color: fuchsia;
+    background-color: hsla(250, 40%, 23%, .3);
+    /*background-color: fuchsia;*/
 }
 
-.field-marking-horizontal>.mark:nth-child(odd) {
-    color: aqua;
-    background-color: black;
+.field-marking-horizontal>.mark:nth-child(odd),
+.field-marking-vertical>.mark:nth-child(odd) {
+    color: aquamarine;
+    background-color: hsla(250, 40%, 23%, .7);
+    /*background-color: black;*/
 }
 
 .maze {
-    color: fuchsia;
+    color: hsl(248, 76%, 80%);
+    grid-area: content;
 }
 
 .cell,
 .active {
-    transition: 0.3s;
+    transition: 0.5s;
 }
 
-.cell:hover {
+.cell.active {
     color: lightgreen;
+    animation: hightlight 3s infinite ease-in-out alternate;
+    transform: translateY(-3px);
 }
 
-.active {
-    color: lightgreen;
-}
-
-.wall {
+.cell.wall {
     cursor: pointer;
+}
+
+@keyframes hightlight {
+    0% {
+        color: hsl(148, 76%, 70%);
+    }
+
+    33% {
+        color: hsl(148, 35%, 40%);
+    }
+
+    66% {
+        color: hsl(148, 76%, 70%);
+    }
+
+    100% {
+        color: hsl(148, 35%, 40%);
+    }
 }
