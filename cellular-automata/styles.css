@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #1e1e24;
+    color: #e0e0e0;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #a89bb9;
+    margin-bottom: 20px;
+}
+
+.maze-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.maze,
+.field-marking-horizontal {
+    display: grid;
+    font-family:
+        "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
+    font-size: 12px;
+
+    /*line-height: 1;*/
+    letter-spacing: 0;
+
+    white-space: pre;
+    user-select: none;
+    width: fit-content;
+    height: fit-content;
+}
+
+.field-marking-horizontal {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.field-marking-horizontal > .mark:nth-child(even) {
+    color: azure;
+    background-color: fuchsia;
+}
+
+.field-marking-horizontal > .mark:nth-child(odd) {
+    color: aqua;
+    background-color: black;
+}
+
+.maze {
+    color: fuchsia;
+}
+
+.cell {
+    transition: 0.3s;
+}
+
+.cell:hover {
+    color: lightgreen;
+}
