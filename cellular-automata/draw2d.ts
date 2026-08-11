@@ -1,56 +1,62 @@
-type Get2DMap = {
-  width: number;
-  height: number;
-  emptySymbol: string;
-  wallSymbol: string;
-  wallPercentage: number;
-};
+import { EvolveMap2D, BuildMap, IsInFrame, CheckAroundCells, Directions } from './types';
 
-export const get2DNoise = ({
+export const isInFrame: IsInFrame = (length, width, index) => {
+  if (
+    index < width
+    || (index % width === width - 1)
+    || (index % width === 0)
+    || (index >= length - width)
+  ) return true;
+  return false;
+};
+export const buildMap: BuildMap = ({
+  length,
   width,
-  height,
-  emptySymbol,
-  wallSymbol,
   wallPercentage,
-}: Get2DMap): string[][] => {
-  let draw = "";
-  const map: string[][] = Array.from({ length: width + 1 }, () => []);
+  emptySymbol,
+  wallSymbol
+}) => {
+  const binaryMap: boolean[] = [];
+  const htmlMap: string[] = [];
 
-  for (let i = 0; i < width; i++) {
-    let displayRow = "";
+  for (let i = 0; i <= length - 1; i++) {
+    const isFrame = isInFrame(length, width, i)
+    const isWall = isFrame || Math.random() < wallPercentage / 100;
 
-    for (let j = 0; j < height; j++) {
-      let val = Math.random() > wallPercentage / 100 ? emptySymbol : wallSymbol;
-      displayRow += val;
-      map[i][j] = val;
-    }
-
-    draw += displayRow + "\n";
+    binaryMap.push(isWall);
+    if (isWall)
+      htmlMap.push(`<div data-structure='wall' ${!isFrame ? `id=${i}` : ''} class='cell wall'>${wallSymbol}</div>`);
+    else
+      htmlMap.push(`<div data-structure='floor' ${!isFrame ? `id=${i}` : ''} class='cell'>${emptySymbol}</div>`);
   }
+
+  return { binaryMap, htmlMap };
+};
+export const checkCells: CheckAroundCells = (
+  binaryMap,
+  width,
+  index,
+) => {
+  const cellsAround: Set<number> = new Set();
+  const visitedCells: Set<number> = new Set();
+
+  const recursiveCheckWalls = (index: number) => {
+    if (isInFrame(binaryMap.length, width, index) || visitedCells.has(index)) return;
+    visitedCells.add(index);
+    if (binaryMap[index] === true) cellsAround.add(index);
+    else return;
+
+    if ((index + 1) % width !== 0) recursiveCheckWalls(index + 1);
+    if ((index % width) !== 0) recursiveCheckWalls(index - 1);
+
+    recursiveCheckWalls(index + width);
+    recursiveCheckWalls(index - width);
+  }
+
+  recursiveCheckWalls(index);
+
+  return cellsAround;
+}
+export const evolveMap2D: EvolveMap2D = (map) => {
   return map;
-};
-
-type Stringify2D = (map2D: string[][], hasFieldNumbers?: boolean) => string;
-export const stringify2D: Stringify2D = (map2D) => {
-  let result: string = "";
-
-  map2D.map((row) => {
-    const viewRow = row.map(
-      (item) =>
-        `<div class='cell' style='${item.trim().length > 0 && "cursor: pointer"}'>${item}</div>`,
-    );
-
-    result += viewRow + "\n";
-  });
-
-  return result.replaceAll(",", "");
-};
-
-type EvolveMap2D = (map2D: string[][]) => string[][];
-
-export const evolveMap2D: EvolveMap2D = (map2D) => {
-  const height = map2D.length;
-  const width = map2D[0]?.length || 0;
-
-  return [];
 };

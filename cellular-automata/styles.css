@@ -59,12 +59,12 @@ h1 {
     margin: 0;
 }
 
-.field-marking-horizontal > .mark:nth-child(even) {
+.field-marking-horizontal>.mark:nth-child(even) {
     color: azure;
     background-color: fuchsia;
 }
 
-.field-marking-horizontal > .mark:nth-child(odd) {
+.field-marking-horizontal>.mark:nth-child(odd) {
     color: aqua;
     background-color: black;
 }
@@ -73,10 +73,19 @@ h1 {
     color: fuchsia;
 }
 
-.cell {
+.cell,
+.active {
     transition: 0.3s;
 }
 
 .cell:hover {
     color: lightgreen;
+}
+
+.active {
+    color: lightgreen;
+}
+
+.wall {
+    cursor: pointer;
 }
