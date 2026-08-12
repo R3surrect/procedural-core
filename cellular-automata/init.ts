@@ -122,7 +122,7 @@ export const drawLayout = () => {
       <button id="next-generation" type="button">Get next generation</button>
       <button id="refresh" type="button">Refresh grid</button>
       <button id="animate-generation" type="button">Play animation</button>
-      <button id="paint-islands" type="button">Pain islands</button>
+      <button id="paint-islands" type="button">Paint islands</button>
     </div>
   `;
 
