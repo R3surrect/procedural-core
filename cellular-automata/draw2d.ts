@@ -1,3 +1,4 @@
+import { getRandomBrightHslColor } from "../utils/colors";
 import { getSeededRandom, stringToSeed } from "../utils/seededRandom";
 import { EvolveMap2D, BuildMap, IsInFrame, CheckAroundCells } from "./types";
 
@@ -9,15 +10,12 @@ export const isInFrame: IsInFrame = (length, width, index) => {
     index >= length - width
   );
 };
-
 export const checkWallCountAround = (
   map: boolean[],
   width: number,
   index: number
 ) => {
-  if (isInFrame(map.length, width, index)) {
-    return 8;
-  }
+  if (isInFrame(map.length, width, index)) return 8;
 
   let wallsAround = 0;
 
@@ -35,7 +33,6 @@ export const checkWallCountAround = (
 
   return wallsAround;
 };
-
 export const buildMap: BuildMap = ({
   length,
   width,
@@ -81,17 +78,13 @@ export const checkCells: CheckAroundCells = (binaryMap, width, index) => {
     if (
       isInFrame(binaryMap.length, width, currentIndex) ||
       visitedCells.has(currentIndex)
-    ) {
-      return;
-    }
+    ) return;
 
     visitedCells.add(currentIndex);
 
-    if (binaryMap[currentIndex] === true) {
-      cellsAround.add(currentIndex);
-    } else {
-      return;
-    }
+    if (binaryMap[currentIndex] === true) cellsAround.add(currentIndex);
+    else return;
+
 
     if ((currentIndex + 1) % width !== 0) recursiveCheckWalls(currentIndex + 1);
     if (currentIndex % width !== 0) recursiveCheckWalls(currentIndex - 1);
@@ -135,3 +128,25 @@ export const evolveMap2D: EvolveMap2D = (
 
   return { binaryMap: mapBuffer, htmlMap };
 };
+
+export const paintIslands = (
+  binaryMap: boolean[],
+  htmlMap: string[],
+  width: number,
+  wallSymbol: string,
+) => {
+  const transformedHtmlMap = structuredClone(htmlMap);
+
+  for (let i = width; i < binaryMap.length; i++) {
+    if (isInFrame(binaryMap.length, width, i)) continue;
+
+    const cells = checkCells(binaryMap, width, i);
+    const color = getRandomBrightHslColor()
+    if (cells.size > 0) cells.forEach(item => {
+      transformedHtmlMap[item] = `<div data-structure='wall' style="color: ${color}" class='cell wall'>${wallSymbol}</div>`
+    })
+    else continue
+  }
+
+  return transformedHtmlMap;
+}

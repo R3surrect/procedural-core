@@ -82,7 +82,7 @@ h3 {
 }
 
 .maze {
-    color: hsl(248, 76%, 80%);
+    color: hsl(30, 4%, 60%);
     grid-area: content;
 }
 
@@ -96,7 +96,11 @@ h3 {
 
 .wall {
     cursor: pointer;
-    background-color: hsl(248, 76%, 80%);
+    /*background-color: hsl(248, 76%, 80%);*/
+}
+
+.evolving {
+    color: crimson;
 }
 
 .floating-controls {
@@ -121,15 +125,20 @@ button {
     padding: .75rem;
 }
 
-button:hover {
+button:hover:not(:disabled) {
     transform: translateY(-3px);
     background-color: #ffffff33;
 }
 
+button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
 @keyframes hightlight {
     0% {
-        color: hsl(248, 76%, 80%);
-        background-color: hsl(248, 76%, 80%);
+        color: hsl(30, 4%, 60%);
+        background-color: hsl(30, 4%, 60%);
         /*transform: translateY(-1px);*/
     }
 
@@ -139,8 +148,8 @@ button:hover {
     }
 
     66% {
-        color: hsl(248, 76%, 80%);
-        background-color: hsl(248, 76%, 80%);
+        color: hsl(30, 4%, 60%);
+        background-color: hsl(30, 4%, 60%);
     }
 
     100% {

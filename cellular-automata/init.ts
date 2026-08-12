@@ -1,13 +1,13 @@
 /// <reference types="vite/client" />
 import "./styles.css";
-import { buildMap, checkCells, evolveMap2D } from "./draw2d.js";
+import { buildMap, checkCells, evolveMap2D, paintIslands } from "./draw2d.js";
 
 const config = {
   length: 65400,
   width: 300,
   emptySymbol: "  ",
   wallSymbol: "██",
-  wallPercentage: 40,
+  wallPercentage: 48,
   seed: "",
 };
 
@@ -65,15 +65,15 @@ const handleMouseLeave = (id: number) => {
 };
 
 export const drawLayout = () => {
-  const fieldMarkingHorizontal = Array.from(
-    { length: config.width },
-    (_, i) => `<div class='mark'>${String(i).padStart(2, "0")}</div>`
-  );
+  // const fieldMarkingHorizontal = Array.from(
+  //   { length: config.width },
+  //   (_, i) => `<div class='mark'>${String(i).padStart(2, "0")}</div>`
+  // );
 
-  const fieldMarkingVertical = Array.from(
-    { length: Math.floor(config.length / config.width) },
-    (_, i) => `<div class='mark'>${String(i).padStart(2, "0")}</div>`
-  );
+  // const fieldMarkingVertical = Array.from(
+  //   { length: Math.floor(config.length / config.width) },
+  //   (_, i) => `<div class='mark'>${String(i).padStart(2, "0")}</div>`
+  // );
 
   const layout = `
     <div class="maze-container">
@@ -122,6 +122,7 @@ export const drawLayout = () => {
       <button id="next-generation" type="button">Get next generation</button>
       <button id="refresh" type="button">Refresh grid</button>
       <button id="animate-generation" type="button">Play animation</button>
+      <button id="paint-islands" type="button">Pain islands</button>
     </div>
   `;
 
@@ -156,7 +157,6 @@ const bindEvents = () => {
 
   document.getElementById("apply")?.addEventListener("click", resetMap);
   document.getElementById("refresh")?.addEventListener("click", resetMap);
-
   document.getElementById("next-generation")?.addEventListener("click", callNextGeneration);
 
   document.getElementById("animate-generation")?.addEventListener("click", () => {
@@ -167,7 +167,14 @@ const bindEvents = () => {
 
       if (counter === 20) clearInterval(intervalId);
     }, 350);
-  })
+  });
+
+  document.getElementById('paint-islands')?.addEventListener('click', () => {
+    console.log('Painting started');
+    currentHtmlMap = paintIslands(currentBinaryMap, currentHtmlMap, config.width, config.wallSymbol);
+    updateMazeDOM();
+    console.log('Painting finished');
+  });
 
 };
 
@@ -187,11 +194,8 @@ export const initHightlight = () => {
     const id = Number(closestWall.id);
     if (isNaN(id)) return;
 
-    if (e.type === "pointerover" || e.type === "mouseover") {
-      handleMouseEnter(id);
-    } else {
-      handleMouseLeave(id);
-    }
+    if (e.type === "pointerover" || e.type === "mouseover") handleMouseEnter(id);
+    else handleMouseLeave(id);
   }
 };
 
