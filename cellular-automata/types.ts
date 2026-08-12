@@ -1,5 +1,13 @@
 export type AddFrames = (map1D: boolean[], width: number) => boolean[];
-export type EvolveMap2D = (binaryMap: boolean[], htmlMap: string[]) => boolean[];
+export type EvolveMap2D = (
+  binaryMap: boolean[],
+  width: number,
+  emptySymbol: string,
+  wallSymbol: string,
+) => {
+  binaryMap: boolean[],
+  htmlMap: string[]
+};
 
 export type RawMap = {
   length: number;
@@ -7,6 +15,7 @@ export type RawMap = {
   wallPercentage: number;
   emptySymbol: string;
   wallSymbol: string;
+  seed?: string;
 };
 
 export type BuildMap = (props: RawMap) => {

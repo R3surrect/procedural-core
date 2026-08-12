@@ -1,30 +1,29 @@
 * {
+    outline: none;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+#app {
+    display: grid;
+    grid-template-columns: 1fr 23rem;
+    align-items: center;
     justify-content: center;
+}
+
+body {
     background-color: #1e1e24;
     color: #e0e0e0;
     font-family:
         -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
     margin: 0;
 }
 
-h1 {
+h3 {
     font-size: 1.5rem;
     font-weight: 400;
-    color: #a89bb9;
-    margin-bottom: 20px;
 }
 
 .maze-container {
@@ -45,7 +44,7 @@ h1 {
     display: grid;
     font-family:
         "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
-    font-size: 12px;
+    font-size: 4px;
 
     letter-spacing: 0;
 
@@ -59,19 +58,13 @@ h1 {
 .field-marking-vertical {
     border-radius: 14px;
     padding: 5px;
-    background-color: hsla(248, 53%, 58%, .1);
     font-weight: bolder;
     margin: 0;
     text-align: center;
 }
 
-.field-marking-horizontal {
-    grid-area: marking-horizontal
-}
-
-.field-marking-vertical {
-    grid-area: marking-vertical
-}
+.field-marking-horizontal { grid-area: marking-horizontal }
+.field-marking-vertical { grid-area: marking-vertical }
 
 .grid-container {
     display: grid;
@@ -81,15 +74,11 @@ h1 {
 .field-marking-horizontal>.mark:nth-child(even),
 .field-marking-vertical>.mark:nth-child(even) {
     color: azure;
-    background-color: hsla(250, 40%, 23%, .3);
-    /*background-color: fuchsia;*/
 }
 
 .field-marking-horizontal>.mark:nth-child(odd),
 .field-marking-vertical>.mark:nth-child(odd) {
     color: aquamarine;
-    background-color: hsla(250, 40%, 23%, .7);
-    /*background-color: black;*/
 }
 
 .maze {
@@ -97,39 +86,66 @@ h1 {
     grid-area: content;
 }
 
-.cell,
-.active {
-    transition: 0.5s;
-}
+.cell, .active { transition: 0.5s }
 
 .cell.active {
     color: lightgreen;
     animation: hightlight 1s infinite ease-in-out alternate;
-    transform: translateY(-4px);
+    /*transform: translateY(-4px);*/
 }
 
-.cell.wall {
+.wall {
     cursor: pointer;
+    background-color: hsl(248, 76%, 80%);
+}
+
+.floating-controls {
+    gap: 1rem;
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    width: fit-content;
+    height: fit-content;
+}
+
+button {
+    cursor: pointer;
+    transition: .3s;
+    font-size: 1rem;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    padding: .75rem;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    background-color: #ffffff33;
 }
 
 @keyframes hightlight {
     0% {
         color: hsl(248, 76%, 80%);
-        /*color: hsl(148, 76%, 70%);*/
-        transform: translateY(-1px);
+        background-color: hsl(248, 76%, 80%);
+        /*transform: translateY(-1px);*/
     }
 
     33% {
         color: hsl(148, 35%, 100%);
+        background-color: hsl(148, 35%, 100%);
     }
 
     66% {
         color: hsl(248, 76%, 80%);
-        /*color: hsl(148, 76%, 70%);*/
+        background-color: hsl(248, 76%, 80%);
     }
 
     100% {
         color: hsl(148, 35%, 100%);
-        transform: translateY(-5px);
+        background-color: hsl(148, 35%, 100%);
+        /*transform: translateY(-5px);*/
     }
 }
